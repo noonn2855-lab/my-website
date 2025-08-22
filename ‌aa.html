@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whale Movie</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      min-height: 100vh;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .glass-card { 
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      padding: 80px;
+      width: 350px;
+      text-align: center;
+      color: #fff;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      width: 95%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #4e8ef7;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #3b73d1;
+    }
+
+    a {
+      color: #a3c9ff;
+      text-decoration: none;
+    }
+
+    /* Home Page */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+    }
+
+    .navbar h1 {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .navbar a {
+      margin-left: 20px;
+      color: #a3c9ff;
+    }
+
+    .home-content {
+      padding: 40px;
+      color: white;
+    }
+
+    .drama-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .drama-card {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 15px;
+      text-align: center;
+      color: white;
+      transition: transform 0.3s;
+    }
+
+    .drama-card:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .logo {
+      width: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Page -->
+  <div id="loginPage" class="center">
+    <div class="glass-card">
+      <h2>Login</h2>
+      <input type="text" id="loginEmail" placeholder="Email">
+      <input type="password" id="loginPass" placeholder="Password">
+      <button onclick="checkLogin()">Login</button>
+      <p>Don’t have an account? <a href="#" onclick="showPage('signupPage')">Sign Up</a></p>
+    </div>
+  </div>
+
+  <!-- Sign Up Page -->
+<div id="signupPage" class="center" style="display:none;">
+  <div class="glass-card">
+    <h2>Sign Up</h2>
+    <input type="text" id="signupUser" placeholder="Username">
+    <input type="email" id="signupEmail" placeholder="Email">
+    <input type="password" id="signupPass" placeholder="Password">
+    <button onclick="createAccount()">Create Account</button>
+    <p>Already have an account? <a href="#" onclick="showPage('loginPage')">Login</a></p>
+  </div>
+</div>
+
+  <!-- Home Page -->
+  <div id="homePage" style="display:none;">
+    <div class="navbar">
+      <div class="brand">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Whale_icon.svg/1024px-Whale_icon.svg.png" class="logo" alt="Whale Movie">
+        <h1>Whale Movie</h1>
+      </div>
+      <div>
+        <a href="#">Home</a>
+        <a href="#">Movies</a>
+        <a href="#">Dramas</a>
+        <a href="#">Trending</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    </div>
+    <div class="home-content">
+      <h2>🎬 Drama Recommendations</h2>
+      <div class="drama-grid">
+        <div class="drama-card">Crash Landing on You</div>
+        <div class="drama-card">True Beauty</div>
+        <div class="drama-card">Extraordinary You</div>
+        <div class="drama-card">Goblin</div>
+        <div class="drama-card">Vincenzo</div>
+        <div class="drama-card">My ID is Gangnam Beauty</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let users = [{email: "test@gmail.com", password: "1234"}]; // default account
+
+    function showPage(pageId) {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('signupPage').style.display = 'none';
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById(pageId).style.display = 'block';
+    }
+
+    function createAccount() {
+      let username = document.getElementById('signupUser').value;
+      let email = document.getElementById('signupEmail').value;
+      let password = document.getElementById('signupPass').value;
+      if(username && email && password) {
+        users.push({email: email, password: password});
+        alert('Account created! Please login.');
+        showPage('loginPage');
+      } else {
+        alert('Please fill all fields');
+      }
+    }
+
+    function checkLogin() {
+      let email = document.getElementById('loginEmail').value;
+      let pass = document.getElementById('loginPass').value;
+      let user = users.find(u => u.email === email && u.password === pass);
+      if(user) {
+        showPage('homePage');
+      } else {
+        alert('Invalid email or password');
+      }
+    }
+
+    function logout() {
+      showPage('loginPage');
+    }
+  </script>
+
+</body>
+</html>
